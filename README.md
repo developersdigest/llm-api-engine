@@ -1,5 +1,9 @@
 # LLM API Engine
 
+<p align="center">
+  <img src="https://github.com/developersdigest/llm-api-engine/raw/main/public/llm-api-engine.png" alt="LLM API Engine" width="600"/>
+</p>
+
 Build and deploy AI-powered APIs in seconds. This project allows you to create custom APIs that extract structured data from websites using natural language descriptions, powered by LLMs and web scraping technology.
 
 ## Features
@@ -11,6 +15,22 @@ Build and deploy AI-powered APIs in seconds. This project allows you to create c
 - 🚀 Instant API Deployment
 - 📊 Structured Data Output with JSON Schema validation
 - 💾 Redis-powered Caching and Storage
+
+## Architecture
+
+The LLM API Engine is designed with flexibility in mind:
+
+1. **API Builder**: The Next.js application serves as the builder interface where you create and configure your endpoints.
+2. **Consumable Endpoints**: Once created, your API endpoints can be deployed and consumed anywhere:
+   - Cloudflare Workers (documentation coming soon)
+   - Vercel Edge Functions
+   - AWS Lambda
+   - Any platform that can handle HTTP requests
+
+This decoupled architecture means you can:
+- Use the Next.js app solely for endpoint creation and management
+- Deploy your consumable endpoints separately for optimal performance
+- Scale your API consumption independent of the management interface
 
 ## Tech Stack
 

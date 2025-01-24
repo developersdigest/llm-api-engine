@@ -34,7 +34,7 @@ Build and deploy AI-powered APIs in seconds. This project allows you to create c
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/llm-api-engine.git
+git clone https://github.com/developersdigest/llm-api-engine.git
 cd llm-api-engine
 ```
 

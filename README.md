@@ -69,6 +69,7 @@ OPENAI_API_KEY=your_openai_key
 FIRECRAWL_API_KEY=your_firecrawl_key
 UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token
+NEXT_PUBLIC_API_ROUTE=http://localhost:3000  # Your API base URL
 ```
 
 4. Run the development server:
@@ -77,6 +78,45 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
+
+## Deployment Options
+
+The LLM API Engine is designed with a modular architecture that separates the API builder interface from the actual API endpoints. This means you can:
+
+1. **Use the Builder Interface Only**
+   - Deploy the Next.js app for API creation and management
+   - Use it to generate and test your API configurations
+   - Store configurations in Redis for later use
+
+2. **Independent API Deployment**
+   - Take the generated route configurations and deploy them anywhere
+   - Implement the routes in your preferred framework:
+     ```typescript
+     // Example with Hono
+     import { Hono } from 'hono'
+     const app = new Hono()
+     
+     app.get('/api/results/:endpoint', async (c) => {
+       const data = await redis.get(`api/results/${c.req.param('endpoint')}`)
+       return c.json(data)
+     })
+     ```
+   - Framework options:
+     - Cloudflare Workers with Hono
+     - Express.js standalone server
+     - AWS Lambda with API Gateway
+     - Any HTTP server framework
+
+3. **Hybrid Approach**
+   - Use the builder for configuration
+   - Deploy endpoints separately for optimal performance
+   - Keep configurations in sync via Redis
+
+This flexibility allows you to:
+- Scale API endpoints independently
+- Choose the best deployment platform for your needs
+- Optimize for cost and performance
+- Maintain full control over your API infrastructure
 
 ## Usage
 

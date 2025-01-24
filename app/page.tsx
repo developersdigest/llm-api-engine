@@ -696,7 +696,7 @@ export default function Home() {
     setTransitionMessage('Deploying your API...');
 
     try {
-      // Clean the route and ensure proper path format
+      // Clean the route string
       const cleanRoute = routeInput
         .toLowerCase()
         .replace(/[^a-z0-9-_\s]/g, '') // Remove special chars except spaces, hyphens, underscores
@@ -704,28 +704,32 @@ export default function Home() {
         .replace(/-+/g, '-') // Convert multiple hyphens to single hyphen
         .trim();
 
+      // Format the request body according to the API schema
+      const requestBody = {
+        key: cleanRoute,
+        data: {
+          data: extractedData,
+          metadata: {
+            query: query,
+            schema: JSON.parse(schemaStr),
+            sources: searchResults.filter(r => r.selected).map(r => r.url),
+            lastUpdated: new Date().toISOString()
+          }
+        },
+        route: cleanRoute
+      };
+
       const response = await fetch('/api/deploy', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          key: cleanRoute,
-          data: {
-            data: extractedData,
-            metadata: {
-              query,
-              schema: JSON.parse(schemaStr),
-              sources: searchResults.filter(r => r.selected).map(r => r.url),
-              lastUpdated: new Date().toISOString()
-            }
-          },
-          route: cleanRoute
-        })
+        body: JSON.stringify(requestBody)
       });
 
       if (!response.ok) {
-        throw new Error('Failed to deploy API');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to deploy API');
       }
 
       const data = await response.json();

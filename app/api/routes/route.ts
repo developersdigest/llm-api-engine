@@ -118,33 +118,47 @@ export async function DELETE(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const { endpoint, urls, schema, prompt, searchQuery } = await req.json();
-    if (!endpoint || !urls || !schema || !prompt) {
+    const { endpoint, urls, query, schema } = await req.json();
+
+    if (!endpoint || !urls || !query || !schema) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required parameters'
+        error: 'Missing required parameters: endpoint, urls, query, and schema are required'
       }, { status: 400 });
     }
 
-    // Update the route configuration
-    const config = {
-      urls,
-      schema,
-      prompt,
-      searchQuery,
-      updatedAt: new Date().toISOString()
-    };
+    // Extract data using the provided configuration
+    const extractResponse = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/extract`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ urls, query, schema })
+    });
 
-    await redis.set(`api/results/${endpoint}`, config);
+    const extractData = await extractResponse.json();
+    if (!extractData.success) {
+      throw new Error(extractData.error);
+    }
+
+    // Store the configuration and initial results
+    const configKey = `api/results/${endpoint}`;
+    await redis.set(configKey, {
+      urls,
+      query,
+      schema,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
 
     return NextResponse.json({
       success: true,
-      config
+      message: 'Route deployed successfully',
+      data: extractData.data,
+      url: `/api/results/${endpoint}`
     });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update route' },
+      { success: false, error: 'Failed to deploy route' },
       { status: 500 }
     );
   }

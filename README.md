@@ -11,7 +11,7 @@ Build and deploy AI-powered APIs in seconds. This project allows you to create c
 - 🤖 Natural Language API Creation - Describe your data needs in plain English
 - 🔄 Automatic Schema Generation using OpenAI
 - 🌐 Intelligent Web Scraping with Firecrawl
-- ⚡ Real-time Data Updates with QStash scheduling
+- ⚡ Real-time Data Updates with scheduled scraping
 - 🚀 Instant API Deployment
 - 📊 Structured Data Output with JSON Schema validation
 - 💾 Redis-powered Caching and Storage
@@ -35,7 +35,7 @@ This decoupled architecture means you can:
 ## Tech Stack
 
 - **Frontend**: Next.js 14, React 18, TailwindCSS
-- **APIs**: OpenAI, Firecrawl, Upstash Redis/QStash
+- **APIs**: OpenAI, Firecrawl, Upstash Redis
 - **Data Validation**: Zod
 - **Animations**: Framer Motion
 - **Deployment**: Vercel

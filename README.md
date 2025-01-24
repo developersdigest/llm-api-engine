@@ -106,4 +106,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Powered by [OpenAI](https://openai.com/)
 - Web scraping by [Firecrawl](https://firecrawl.dev/)
 - Data storage by [Upstash](https://upstash.com/)
+
+## Roadmap
+
+### 🚧 In Progress: CRON Functionality
+
+Currently working on implementing scheduled data extraction with the following planned features:
+- Backend CRON implementation using Vercel
+- Rate limiting and retry mechanisms
+- Job queue for concurrent scrapes
+- Schedule management dashboard
+- Job history and monitoring
+- Email notifications for failed jobs
 # llm-api-engine

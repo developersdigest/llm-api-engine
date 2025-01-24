@@ -1,7 +1,7 @@
 # LLM API Engine
 
 <p align="center">
-  <img src="https://github.com/developersdigest/llm-api-engine/raw/main/public/llm-api-engine.png" alt="LLM API Engine" width="600"/>
+  <img src="https://img.youtube.com/vi/8kUeK1Bo4mM/maxresdefault.jpg" alt="LLM API Engine" width="600"/>
 </p>
 
 Build and deploy AI-powered APIs in seconds. This project allows you to create custom APIs that extract structured data from websites using natural language descriptions, powered by LLMs and web scraping technology.

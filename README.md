@@ -108,6 +108,40 @@ curl -X POST "https://your-domain.com/api/deploy" \
 - `GET /api/routes` - List all deployed routes
 - `GET /api/results/:endpoint` - Get results for a specific endpoint
 
+### CRON Implementation (Coming Soon)
+
+The LLM API Engine will support automated data updates through various CRON implementations:
+
+1. **Vercel Cron Jobs (Free Tier)**
+   - Leverage Vercel's built-in CRON functionality
+   - Free tier includes 1 execution per day
+   - Configure via `vercel.json`:
+   ```json
+   {
+     "crons": [{
+       "path": "/api/cron/update",
+       "schedule": "0 0 * * *"
+     }]
+   }
+   ```
+
+2. **Upstash QStash (Alternative)**
+   - Reliable scheduling service with more frequent updates
+   - Better control over execution timing
+   - Webhook-based triggering
+
+3. **GitHub Actions Workflow**
+   - Free alternative for open-source projects
+   - Flexible scheduling options
+   - Direct integration with your repository
+
+Choose the implementation that best fits your needs based on:
+- Required update frequency
+- Budget constraints
+- Infrastructure preferences
+
+Stay tuned for detailed implementation guides for each option!
+
 ### API Usage Example
 
 To fetch data from your deployed endpoint:

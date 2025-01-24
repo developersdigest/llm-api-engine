@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/update",
+      "schedule": "0 0 0 0 *"
+    },
+    {
+      "path": "/api/rescrape/:route",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}

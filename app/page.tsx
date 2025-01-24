@@ -57,7 +57,8 @@ const firecrawl = new FirecrawlApp({
 
 // Utility functions
 const getApiUrl = (path: string) => {
-  return path;
+  const apiRoute = process.env.NEXT_PUBLIC_API_ROUTE || 'http://localhost:3000';
+  return `${apiRoute}${path}`;
 };
 
 const isValidJson = (json: string) => {

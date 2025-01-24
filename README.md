@@ -108,6 +108,32 @@ curl -X POST "https://your-domain.com/api/deploy" \
 - `GET /api/routes` - List all deployed routes
 - `GET /api/results/:endpoint` - Get results for a specific endpoint
 
+### API Usage Example
+
+To fetch data from your deployed endpoint:
+
+```bash
+curl -X GET "${API_ROUTE}/api/results/nvidia-market-cap" \
+  -H "Authorization: Bearer sk_your_api_key" \
+  -H "Content-Type: application/json"
+```
+
+The API will return data in the following format:
+
+```json
+{
+  "success": true,
+  "data": {
+    // Your extracted data here
+  },
+  "lastUpdated": "2024-01-01T00:00:00.000Z",
+  "sources": [
+    "https://example.com/source1",
+    "https://example.com/source2"
+  ]
+}
+```
+
 ## Contributing
 
 1. Fork the repository

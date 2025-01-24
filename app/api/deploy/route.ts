@@ -54,11 +54,15 @@ export async function POST(req: Request) {
     // Store the data in Redis
     await redis.set(`api/results/${cleanRoute}`, JSON.stringify(data));
 
+    const apiRoute = process.env.API_ROUTE || 'http://localhost:3000';
+    const fullUrl = `${apiRoute}/api/results/${cleanRoute}`;
+
     return NextResponse.json({
       success: true,
       message: 'API endpoint deployed successfully',
       route: cleanRoute,
-      url: `/api/results/${cleanRoute}`
+      url: fullUrl,
+      curlCommand: `curl -X GET "${fullUrl}" \\\n  -H "Authorization: Bearer sk_w4964vzs5p" \\\n  -H "Content-Type: application/json"`
     });
   } catch (error) {
     console.error('Deployment error:', error);

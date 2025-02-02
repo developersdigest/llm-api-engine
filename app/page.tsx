@@ -124,6 +124,9 @@ export default function Home() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Add state for custom URL input
+  const [customUrl, setCustomUrl] = useState('');
+
   // Steps configuration
   const steps = [
     { number: 1, title: 'Describe Your API', description: 'Tell us what data you want to extract' },
@@ -310,7 +313,12 @@ export default function Home() {
   };
 
   const handleExtractData = async () => {
-    if (!searchResults.some(r => r.selected)) {
+    const selectedUrls = [
+      ...searchResults.filter(r => r.selected).map(r => r.url),
+      ...(customUrl ? [customUrl] : [])
+    ];
+
+    if (selectedUrls.length === 0) {
       setError('Please select at least one source');
       return;
     }
@@ -321,7 +329,6 @@ export default function Home() {
     setTransitionMessage('Extracting data from sources...');
 
     try {
-      const selectedUrls = searchResults.filter(r => r.selected).map(r => r.url);
       const schemaRequest = JSON.parse(schemaStr) as JsonSchema;
       
       console.log('OpenAI Generated Schema:', schemaRequest);
@@ -507,8 +514,8 @@ export default function Home() {
   };
 
   const handleSourcesSubmit = async () => {
-    if (!searchResults.some(r => r.selected)) {
-      setError('Please select at least one source');
+    if (!searchResults.some(r => r.selected) && !customUrl) {
+      setError('Please select at least one source or enter a custom URL');
       return;
     }
 
@@ -713,7 +720,10 @@ export default function Home() {
           metadata: {
             query: query,
             schema: JSON.parse(schemaStr),
-            sources: searchResults.filter(r => r.selected).map(r => r.url),
+            sources: [
+              ...searchResults.filter(r => r.selected).map(r => r.url),
+              ...(customUrl ? [customUrl] : [])
+            ],
             lastUpdated: new Date().toISOString()
           }
         },
@@ -1022,6 +1032,27 @@ export default function Home() {
                       <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </button>
+                </div>
+              </div>
+
+              {/* Custom URL input */}
+              <div className="px-6 pb-6">
+                <div className={`bg-white/5 backdrop-blur-sm rounded-lg p-6 border ${customUrl ? 'border-emerald-500' : 'border-white/10'}`}>
+                  <div className="space-y-4">
+                    <input
+                      type="text"
+                      placeholder="Enter a custom URL..."
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                      value={customUrl}
+                      onChange={(e) => setCustomUrl(e.target.value)}
+                    />
+                    {customUrl && (
+                      <div className="flex items-center space-x-2 text-emerald-500">
+                        <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                        <span className="text-sm">Custom URL is set</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 

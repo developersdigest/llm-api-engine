@@ -66,7 +66,8 @@ npm install
 3. Create a `.env` file with the following variables:
 ```env
 OPENAI_API_KEY=your_openai_key
-FIRECRAWL_API_KEY=your_firecrawl_key
+NEXT_PUBLIC_FIRECRAWL_API_KEY=your_firecrawl_key
+SERPER_API_KEY=your_serper_key
 UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token
 NEXT_PUBLIC_API_ROUTE=http://localhost:3000  # Your API base URL
